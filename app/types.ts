@@ -14,15 +14,17 @@ export interface IProductsResponse {
 }
 
 export interface ICartItem {
-  id: number
+  product: Pick<IProduct, 'id' | 'title' | 'price'>
   quantity: number
 }
 
 export interface ICart {
-  items: Record<ICartItem['id'], ICartItem>
+  items: Record<ICartItem['product']['id'], ICartItem>
 }
 
 export interface IOrder {
   phoneNumber: number | null
   cart: ICart
 }
+
+export type TCurrency = 'RUB' | 'USD'

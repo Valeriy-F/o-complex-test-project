@@ -2,8 +2,8 @@
 
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks'
 import { orderActions, selectOrderCartItems } from '@/app/store/order/order-slice'
-import { IProduct } from '@/app/types'
-import { ChangeEventHandler, useState } from 'react'
+import { ICart, IProduct } from '@/app/types'
+import { ChangeEventHandler, useEffect, useState } from 'react'
 import Button from '../ui/button'
 
 type TAddProductToCartWidgetProps = {
@@ -11,8 +11,8 @@ type TAddProductToCartWidgetProps = {
 }
 
 export default function AddProductToCartWidget({ product }: TAddProductToCartWidgetProps) {
-  const cartItems = useAppSelector(selectOrderCartItems)
-  const [quantity, setQuantity] = useState(cartItems[product.id] ? cartItems[product.id].quantity : 0)
+  const cartItems: ICart['items'] = useAppSelector(selectOrderCartItems)
+  const [quantity, setQuantity] = useState(0)
 
   const dispatch = useAppDispatch()
 
@@ -38,13 +38,21 @@ export default function AddProductToCartWidget({ product }: TAddProductToCartWid
     setQuantity(quantity)
 
     if (quantity > 0) {
-      dispatch(orderActions.addOrUpdateCartItem({ id: product.id, quantity }))
+      dispatch(orderActions.addOrUpdateCartItem({ product, quantity }))
     } else {
-      dispatch(orderActions.removeFromCart({id: product.id}))
+      dispatch(orderActions.removeFromCart({ product }))
     }
   }
 
-  return (
+  const onBuyButtonClick = () => {
+    changeQuantity(1)
+  }
+
+  useEffect(() => {
+    setQuantity(cartItems[product.id] ? cartItems[product.id].quantity : 0)
+  }, [cartItems])
+
+  return quantity ? (
     <div className="grid grid-cols-4 gap-1 sm:gap-2">
       <Button onClick={decrementQuantity}>-</Button>
       <input
@@ -56,5 +64,9 @@ export default function AddProductToCartWidget({ product }: TAddProductToCartWid
       />
       <Button onClick={incrementQuantity}>+</Button>
     </div>
+  ) : (
+    <Button onClick={onBuyButtonClick} className="w-full">
+      Купить
+    </Button>
   )
 }

@@ -36,21 +36,21 @@ const orderSlice = createSlice({
     setPhoneNumber(state, action: PayloadAction<number>) {
       state.phoneNumber = action.payload
     },
-    addOrUpdateCartItem(state, { payload: { id, quantity } }: PayloadAction<ICartItem>) {
-      if (id in state.cart.items) {
-        state.cart.items[id].quantity = quantity
+    addOrUpdateCartItem(state, { payload: { product, quantity } }: PayloadAction<ICartItem>) {
+      if (product.id in state.cart.items) {
+        state.cart.items = { ...state.cart.items, [product.id]: { product, quantity } }
       } else {
-        state.cart.items[id] = { id, quantity }
+        state.cart.items[product.id] = { product, quantity }
       }
 
       setToStorage(state)
     },
-    removeFromCart(state, { payload: { id } }: PayloadAction<Pick<ICartItem, 'id'>>) {
-      if (!(id in state.cart.items)) {
+    removeFromCart(state, { payload: { product } }: PayloadAction<Pick<ICartItem, 'product'>>) {
+      if (!(product.id in state.cart.items)) {
         return
       }
 
-      delete state.cart.items[id]
+      delete state.cart.items[product.id]
 
       setToStorage(state)
     },
