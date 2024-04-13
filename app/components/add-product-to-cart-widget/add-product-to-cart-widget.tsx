@@ -1,38 +1,55 @@
 'use client'
 
-import { ChangeEventHandler, EventHandler, FormEventHandler, useState } from 'react'
-import Button from "../ui/button"
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks'
+import { orderActions, selectOrderCartItems } from '@/app/store/order/order-slice'
+import { IProduct } from '@/app/types'
+import { ChangeEventHandler, useState } from 'react'
+import Button from '../ui/button'
 
-export default function AddProductToCartWidget() {
-  const [quantity, setQquantity] = useState(1)
+type TAddProductToCartWidgetProps = {
+  product: IProduct
+}
+
+export default function AddProductToCartWidget({ product }: TAddProductToCartWidgetProps) {
+  const cartItems = useAppSelector(selectOrderCartItems)
+  const [quantity, setQuantity] = useState(cartItems[product.id] ? cartItems[product.id].quantity : 0)
+
+  const dispatch = useAppDispatch()
 
   const decrementQuantity = () => {
-    if (quantity === 1) {
-      return
-    }
-
-    setQquantity(quantity - 1)
+    changeQuantity(quantity > 0 ? quantity - 1 : 0)
   }
 
   const incrementQuantity = () => {
-    setQquantity(quantity + 1)
+    changeQuantity(quantity + 1)
   }
 
   const onQuantityChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     let value = parseInt(e.target.value)
 
-    if (Number.isNaN(value) || value < 1) {
-      return
+    if (Number.isNaN(value) || value < 0) {
+      value = 0
     }
 
-    setQquantity(value)
+    changeQuantity(value)
+  }
+
+  const changeQuantity = (quantity: number) => {
+    setQuantity(quantity)
+
+    if (quantity > 0) {
+      dispatch(orderActions.addOrUpdateCartItem({ id: product.id, quantity }))
+    } else {
+      dispatch(orderActions.removeFromCart({id: product.id}))
+    }
   }
 
   return (
-    <div className="grid grid-cols-4 gap-2">
+    <div className="grid grid-cols-4 gap-1 sm:gap-2">
       <Button onClick={decrementQuantity}>-</Button>
       <input
         type="number"
+        min={0}
         value={quantity}
         onChange={onQuantityChange}
         className="col-span-2 rounded-lg bg-current-800 text-current-100 text-2xl p-2 text-center"

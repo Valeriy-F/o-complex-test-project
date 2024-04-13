@@ -14,7 +14,7 @@ export default function ProductListItem({ product }: TProductListItemProps) {
       <div className="font-semibold text-2xl text-center break-all">{product.title}</div>
       <div className="justify-self-start break-all">{product.description}</div>
       <div className="text-2xl">Price: {product.price}&#8381;</div>
-      <div><AddProductToCartWidget /></div>
+      <div><AddProductToCartWidget product={product} /></div>
     </div>
   )
 }

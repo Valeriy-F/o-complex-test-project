@@ -12,3 +12,17 @@ export interface IProductsResponse {
   total: number
   products: IProduct[]
 }
+
+export interface ICartItem {
+  id: number
+  quantity: number
+}
+
+export interface ICart {
+  items: Record<ICartItem['id'], ICartItem>
+}
+
+export interface IOrder {
+  phoneNumber: number | null
+  cart: ICart
+}
