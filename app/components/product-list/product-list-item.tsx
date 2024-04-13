@@ -1,4 +1,5 @@
 import { IProduct } from '@/app/types'
+import AddProductToCartWidget from "../add-product-to-cart-widget/add-product-to-cart-widget"
 
 type TProductListItemProps = {
   product: IProduct
@@ -13,6 +14,7 @@ export default function ProductListItem({ product }: TProductListItemProps) {
       <div className="font-semibold text-2xl text-center break-all">{product.title}</div>
       <div className="justify-self-start break-all">{product.description}</div>
       <div className="text-2xl">Price: {product.price}&#8381;</div>
+      <div><AddProductToCartWidget /></div>
     </div>
   )
 }
