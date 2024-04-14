@@ -2,7 +2,7 @@
 
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks'
 import { orderActions, selectOrderCartItems } from '@/app/store/order/order-slice'
-import { IProduct } from '@/app/types'
+import { IProduct, TCartItems } from '@/app/types'
 import { ChangeEventHandler, useEffect, useState } from 'react'
 import Button from '../ui/button'
 
@@ -66,7 +66,7 @@ export default function AddProductToCartWidget({ product }: TAddProductToCartWid
     </div>
   ) : (
     <Button onClick={onBuyButtonClick} className="w-full">
-      Купить
+      Buy
     </Button>
   )
 }

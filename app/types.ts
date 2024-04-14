@@ -27,5 +27,13 @@ export interface IOrder {
   cart: ICart
 }
 
+export interface IOrderSubmitRequest {
+  phone: string
+  cart: Array<{
+    id: number
+    quantity: number
+  }>
+}
+
 export type TCartItems = ICart['items']
 export type TCurrency = 'RUB' | 'USD'

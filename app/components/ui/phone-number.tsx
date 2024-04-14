@@ -37,7 +37,7 @@ export default function PhoneNumber({ value = '', onChange, countryCode = 7, ...
       return
     }
 
-    onChange(+phoneNumber, phoneNumber.length === 10, e)
+    onChange(+(countryCode + phoneNumber), phoneNumber.length === 10, e)
   }
 
   const onInputKeyDown: KeyboardEventHandler<HTMLInputElement> = (e) => {

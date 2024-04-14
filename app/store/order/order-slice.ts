@@ -56,6 +56,11 @@ const orderSlice = createSlice({
 
       setToStorage(state)
     },
+    clearCart(state) {
+      state.cart = initialState.cart
+
+      setToStorage(state)
+    }
   },
 })
 
