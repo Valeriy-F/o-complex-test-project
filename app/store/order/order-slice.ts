@@ -35,6 +35,8 @@ const orderSlice = createSlice({
   reducers: {
     setPhoneNumber(state, action: PayloadAction<number>) {
       state.phoneNumber = action.payload
+
+      setToStorage(state)
     },
     addOrUpdateCartItem(state, { payload: { product, quantity } }: PayloadAction<ICartItem>) {
       if (product.id in state.cart.items) {
@@ -60,3 +62,4 @@ const orderSlice = createSlice({
 export const orderActions = orderSlice.actions
 export const orderReducer = orderSlice.reducer
 export const selectOrderCartItems = (state: TRootState) => state.orderReducer.cart.items
+export const selectOrderPhoneNumber = (state: TRootState) => state.orderReducer.phoneNumber

@@ -2,7 +2,7 @@
 
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks'
 import { orderActions, selectOrderCartItems } from '@/app/store/order/order-slice'
-import { ICart, IProduct } from '@/app/types'
+import { IProduct } from '@/app/types'
 import { ChangeEventHandler, useEffect, useState } from 'react'
 import Button from '../ui/button'
 
@@ -11,7 +11,7 @@ type TAddProductToCartWidgetProps = {
 }
 
 export default function AddProductToCartWidget({ product }: TAddProductToCartWidgetProps) {
-  const cartItems: ICart['items'] = useAppSelector(selectOrderCartItems)
+  const cartItems: TCartItems = useAppSelector(selectOrderCartItems)
   const [quantity, setQuantity] = useState(0)
 
   const dispatch = useAppDispatch()

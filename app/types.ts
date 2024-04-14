@@ -27,4 +27,5 @@ export interface IOrder {
   cart: ICart
 }
 
+export type TCartItems = ICart['items']
 export type TCurrency = 'RUB' | 'USD'

@@ -7,7 +7,7 @@ export type TOnPhoneNumberChangeHandler = (
   event: ChangeEvent<HTMLInputElement>
 ) => void
 
-type TPhoneNumberProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'value' | 'onChange' | 'onKeyDown'> & {
+type TPhoneNumberProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'onChange' | 'onKeyDown'> & {
   countryCode?: number
   onChange?: TOnPhoneNumberChangeHandler
 }
@@ -21,8 +21,8 @@ const isKeyNumber = (key: string) => !Number.isNaN(parseInt(key))
 
 const isKeyBackspace = (key: string) => key === 'Backspace'
 
-export default function PhoneNumber({ onChange, countryCode = 7, ...otherProps }: TPhoneNumberProps) {
-  const [phoneNumber, setPhoneNumber] = useState<string>('')
+export default function PhoneNumber({ value = '', onChange, countryCode = 7, ...otherProps }: TPhoneNumberProps) {
+  const [phoneNumber, setPhoneNumber] = useState<string>(value ? String(value) : '')
 
   const addDigitToPhoneNumber = (digit: string) => {
     if (phoneNumber.length >= 10) {
