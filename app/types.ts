@@ -35,5 +35,12 @@ export interface IOrderSubmitRequest {
   }>
 }
 
+export interface IProductsResponse {
+  page: number
+  amount: number
+  total: number
+  items: IProduct[]
+}
+
 export type TCartItems = ICart['items']
 export type TCurrency = 'RUB' | 'USD'
