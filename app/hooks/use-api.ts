@@ -56,9 +56,29 @@ export function useApiGetProducts() {
         const response = await fetch(`http://o-complex.com:1337/products?page=${page}&page_size=${perPage}`)
         const result = await response.json()
 
-        if (result.error) {
-          throw new Error(result.error)
-        }
+        return result
+      } catch (error) {
+        setError(error instanceof Error ? error : new Error(JSON.stringify(error)))
+      } finally {
+        setIsLoading(false)
+      }
+    },
+  }
+}
+
+export function useApiGetFeedbacks() {
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<Error | null>(null)
+
+  return {
+    isLoading,
+    error,
+    getFeedbacks: async (): Promise<IProductsResponse | undefined> => {
+      try {
+        setIsLoading(true)
+
+        const response = await fetch(`http://o-complex.com:1337/reviews`)
+        const result = await response.json()
 
         return result
       } catch (error) {

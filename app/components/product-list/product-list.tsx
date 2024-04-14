@@ -3,8 +3,8 @@
 import { useApiGetProducts } from '@/app/hooks/use-api'
 import { IProduct } from '@/app/types'
 import { useEffect, useState } from 'react'
+import Loading from '../ui/loading'
 import ProductListItem from './product-list-item'
-import Loading from "../ui/loading"
 
 const PER_PAGE = 20
 

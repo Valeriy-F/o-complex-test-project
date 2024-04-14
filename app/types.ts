@@ -42,5 +42,10 @@ export interface IProductsResponse {
   items: IProduct[]
 }
 
+export interface IFeedback {
+  id: number
+  text: string
+}
+
 export type TCartItems = ICart['items']
 export type TCurrency = 'RUB' | 'USD'

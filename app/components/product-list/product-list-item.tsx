@@ -30,7 +30,7 @@ export default function ProductListItem({ product, isLastInList = false, onAppea
   }, [isLastInList])
 
   return (
-    <Card ref={cardRef} className="product-list-item">
+    <Card ref={cardRef}>
       <div className="w-full h-max flex justify-center">
         <img src={product.image_url} alt={product.title} height="100%" className="rounded-lg"></img>
       </div>
