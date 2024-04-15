@@ -1,9 +1,13 @@
 'use client'
-import { useRef } from 'react'
-import { Provider } from 'react-redux'
-import { TAppStore, makeStore } from './store'
 
-export default function StoreProvider({ children }: { children: React.ReactNode }) {
+import { PropsWithChildren, useRef } from 'react'
+import { Provider } from 'react-redux'
+
+import { makeStore, TAppStore } from './store'
+
+type TStoreProviderProps = PropsWithChildren
+
+export default function StoreProvider({ children }: TStoreProviderProps) {
   const storeRef = useRef<TAppStore>()
   if (!storeRef.current) {
     storeRef.current = makeStore()

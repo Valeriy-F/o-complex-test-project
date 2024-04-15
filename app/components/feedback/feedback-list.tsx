@@ -1,6 +1,7 @@
+import { getFeedbacks } from '@/app/api/api'
 import { IFeedback } from '@/app/types'
+
 import FeedbaclListItem from './feedback-list-item'
-import { getFeedbacks } from "@/app/api/api"
 
 export default async function FeedbaclList() {
   const feedbacks: IFeedback[] = await getFeedbacks()

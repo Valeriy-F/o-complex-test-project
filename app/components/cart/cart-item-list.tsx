@@ -1,6 +1,7 @@
 'use client'
 
 import { TCartItems } from '@/app/types'
+
 import Price from '../ui/price'
 
 type TCartItemListProps = {

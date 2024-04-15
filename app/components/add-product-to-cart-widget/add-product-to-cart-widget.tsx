@@ -1,9 +1,11 @@
 'use client'
 
+import { ChangeEventHandler, useEffect, useState } from 'react'
+
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks'
 import { orderActions, selectOrderCartItems } from '@/app/store/order/order-slice'
 import { IProduct, TCartItems } from '@/app/types'
-import { ChangeEventHandler, useEffect, useState } from 'react'
+
 import Button from '../ui/button'
 
 type TAddProductToCartWidgetProps = {
@@ -50,7 +52,7 @@ export default function AddProductToCartWidget({ product }: TAddProductToCartWid
 
   useEffect(() => {
     setQuantity(cartItems[product.id] ? cartItems[product.id].quantity : 0)
-  }, [cartItems])
+  }, [cartItems, product.id])
 
   return quantity ? (
     <div className="grid grid-cols-4 gap-1 sm:gap-2">

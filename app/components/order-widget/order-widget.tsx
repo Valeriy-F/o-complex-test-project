@@ -1,10 +1,12 @@
 'use client'
 
+import { useEffect, useState } from 'react'
+
 import { useApiOrderSubmit } from '@/app/hooks/use-api'
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks'
 import { orderActions, selectOrderCartItems, selectOrderPhoneNumber } from '@/app/store/order/order-slice'
 import { TCartItems } from '@/app/types'
-import { useEffect, useState } from 'react'
+
 import CartItemList from '../cart/cart-item-list'
 import Button from '../ui/button'
 import Card from '../ui/card'

@@ -35,13 +35,6 @@ export interface IOrderSubmitRequest {
   }>
 }
 
-export interface IProductsResponse {
-  page: number
-  amount: number
-  total: number
-  items: IProduct[]
-}
-
 export interface IFeedback {
   id: number
   text: string

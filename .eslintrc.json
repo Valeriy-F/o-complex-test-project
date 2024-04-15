@@ -4,15 +4,13 @@
     "prettier",
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:prettier/recommended",
-    "plugin:@typescript-eslint/recommended"
+    "plugin:prettier/recommended"
   ],
   "plugins": [
     "prettier",
     "react",
     "react-hooks",
-    "simple-import-sort",
-    "@typescript-eslint"
+    "simple-import-sort"
   ],
   "rules": {
     "eqeqeq": "error",
@@ -24,7 +22,8 @@
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "simple-import-sort/imports": "error",
-    "simple-import-sort/exports": "error"
+    "simple-import-sort/exports": "error",
+    "no-unused-vars": "off"
   },
   "parserOptions": {
     "ecmaVersion": 6,

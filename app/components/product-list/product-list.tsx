@@ -1,9 +1,12 @@
 'use client'
 
+import { useEffect, useState } from 'react'
+
 import { useApiGetProducts } from '@/app/hooks/use-api'
 import { IProduct } from '@/app/types'
-import { useEffect, useState } from 'react'
+
 import Loading from '../ui/loading'
+
 import ProductListItem from './product-list-item'
 
 type TProductListProps = {
@@ -13,21 +16,21 @@ type TProductListProps = {
 
 const PER_PAGE = 20
 
-export default function ProductList({initialProducts = [], currentPage = 1}: TProductListProps) {
+export default function ProductList({ initialProducts = [], currentPage = 1 }: TProductListProps) {
   const { getProducts, isLoading } = useApiGetProducts()
   const [products, setProducts] = useState<IProduct[]>(initialProducts)
   const [page, setPage] = useState(currentPage)
 
+  const onAppearanceInViewPort = () => {
+    setPage(page + 1)
+  }
+
   const fetchProducts = async () => {
-    const productsResponse = await getProducts({page, perPage: PER_PAGE})
+    const productsResponse = await getProducts({ page, perPage: PER_PAGE })
 
     if (productsResponse) {
       setProducts((prevState) => [...prevState, ...productsResponse.products])
     }
-  }
-
-  const onAppearanceInViewPort = () => {
-    setPage(page + 1)
   }
 
   useEffect(() => {

@@ -1,5 +1,6 @@
-import { TCurrency } from "@/app/types"
-import { ReactNode } from "react"
+import { ReactNode } from 'react'
+
+import { TCurrency } from '@/app/types'
 
 type TPriceProps = {
   value: number

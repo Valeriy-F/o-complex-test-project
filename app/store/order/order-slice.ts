@@ -1,6 +1,8 @@
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+
 import { ICartItem, IOrder } from '@/app/types'
-import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { TRootState } from "../store"
+
+import { TRootState } from '../store'
 
 const STORAGE_KEY = 'order_state'
 
@@ -60,7 +62,7 @@ const orderSlice = createSlice({
       state.cart = initialState.cart
 
       setToStorage(state)
-    }
+    },
   },
 })
 

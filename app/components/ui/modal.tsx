@@ -1,8 +1,9 @@
 'use client'
 
-import { PropsWithChildren } from "react"
+import { PropsWithChildren } from 'react'
+
 import Card from './card'
-import Overlay from "./overlay"
+import Overlay from './overlay'
 
 type TMoalProps = PropsWithChildren & {
   close: () => void
