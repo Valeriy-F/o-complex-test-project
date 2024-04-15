@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { IOrder, IProductsResponse } from '../types'
+import { decorateRequest, getProducts, postOrder } from '../api/api'
+import { IOrder, IPagination, IProductsResponse, IResponse } from '../types'
 
 export function useApiOrderSubmit() {
   const [isLoading, setIsLoading] = useState(false)
@@ -8,37 +9,18 @@ export function useApiOrderSubmit() {
   return {
     isLoading,
     error,
-    submitOrder: async ({ phoneNumber, cart: { items } }: IOrder) => {
-      const requestBody = {
-        phone: String(phoneNumber),
-        cart: Object.values(items).map((cartItem) => ({
-          id: cartItem.product.id,
-          quantity: cartItem.quantity,
-        })),
-      }
-
-      try {
+    submitOrder: decorateRequest<IOrder, IResponse>(
+      postOrder,
+      () => {
         setIsLoading(true)
-
-        const response = await fetch('http://o-complex.com:1337/order', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-          },
-          body: JSON.stringify(requestBody),
-        })
-
-        const result = await response.json()
-
-        if (result.error) {
-          throw new Error(result.error)
-        }
-      } catch (error) {
-        setError(error instanceof Error ? error : new Error(JSON.stringify(error)))
-      } finally {
+      },
+      () => {
         setIsLoading(false)
+      },
+      (error) => {
+        setError(error)
       }
-    },
+    ),
   }
 }
 
@@ -49,43 +31,17 @@ export function useApiGetProducts() {
   return {
     isLoading,
     error,
-    getProducts: async (page = 1, perPage = 20): Promise<IProductsResponse | undefined> => {
-      try {
+    getProducts: decorateRequest<IPagination, IProductsResponse | undefined>(
+      getProducts,
+      () => {
         setIsLoading(true)
-
-        const response = await fetch(`http://o-complex.com:1337/products?page=${page}&page_size=${perPage}`)
-        const result = await response.json()
-
-        return result
-      } catch (error) {
-        setError(error instanceof Error ? error : new Error(JSON.stringify(error)))
-      } finally {
+      },
+      () => {
         setIsLoading(false)
+      },
+      (error) => {
+        setError(error)
       }
-    },
-  }
-}
-
-export function useApiGetFeedbacks() {
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<Error | null>(null)
-
-  return {
-    isLoading,
-    error,
-    getFeedbacks: async (): Promise<IProductsResponse | undefined> => {
-      try {
-        setIsLoading(true)
-
-        const response = await fetch(`http://o-complex.com:1337/reviews`)
-        const result = await response.json()
-
-        return result
-      } catch (error) {
-        setError(error instanceof Error ? error : new Error(JSON.stringify(error)))
-      } finally {
-        setIsLoading(false)
-      }
-    },
+    ),
   }
 }

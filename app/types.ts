@@ -47,5 +47,16 @@ export interface IFeedback {
   text: string
 }
 
+export interface IPagination {
+  page: number
+  perPage: number
+}
+
+export interface IResponse {
+  success: 0 | 1
+  error?: string
+}
+
 export type TCartItems = ICart['items']
 export type TCurrency = 'RUB' | 'USD'
+export type TPaginationProps = Partial<IPagination>

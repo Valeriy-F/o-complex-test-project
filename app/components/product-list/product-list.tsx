@@ -6,15 +6,20 @@ import { useEffect, useState } from 'react'
 import Loading from '../ui/loading'
 import ProductListItem from './product-list-item'
 
+type TProductListProps = {
+  initialProducts?: IProduct[]
+  currentPage?: number
+}
+
 const PER_PAGE = 20
 
-export default function ProductList() {
+export default function ProductList({initialProducts = [], currentPage = 1}: TProductListProps) {
   const { getProducts, isLoading } = useApiGetProducts()
-  const [products, setProducts] = useState<IProduct[]>([])
-  const [page, setPage] = useState(1)
+  const [products, setProducts] = useState<IProduct[]>(initialProducts)
+  const [page, setPage] = useState(currentPage)
 
   const fetchProducts = async () => {
-    const productsResponse = await getProducts(page, PER_PAGE)
+    const productsResponse = await getProducts({page, perPage: PER_PAGE})
 
     if (productsResponse) {
       setProducts((prevState) => [...prevState, ...productsResponse.products])
@@ -26,6 +31,10 @@ export default function ProductList() {
   }
 
   useEffect(() => {
+    if (initialProducts.length && page === 1) {
+      return
+    }
+
     fetchProducts()
   }, [page])
 

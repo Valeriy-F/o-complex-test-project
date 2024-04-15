@@ -1,9 +1,12 @@
-import FeedbaclList from "./components/feedback/feedback-list"
+import { getProducts } from './api/api'
+import FeedbaclList from './components/feedback/feedback-list'
 import Header from './components/header'
-import OrderWidget from "./components/order-widget/order-widget"
-import ProductList from "./components/product-list/product-list"
+import OrderWidget from './components/order-widget/order-widget'
+import ProductList from './components/product-list/product-list'
 
-export default function Home() {
+export default async function Home() {
+  const response = await getProducts({ page: 1, perPage: 20 })
+
   return (
     <>
       <header className="w-full py-2 sm:py-6">
@@ -17,7 +20,7 @@ export default function Home() {
           <OrderWidget />
         </section>
         <section>
-          <ProductList />
+          <ProductList initialProducts={response.products} />
         </section>
       </main>
     </>
